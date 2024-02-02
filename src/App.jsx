@@ -1,6 +1,6 @@
 import "./App.css";
 import S from "./App.module.scss";
-// import { connect } from "react-redux";
+import { Counter } from "./features/counter/Counter";
 
 function App() {
   return (
@@ -10,14 +10,18 @@ function App() {
       </header>
       <main>
         <label for={"enterNewTask"}></label>
-        <input id={"enterNewTask"} type={"text"} placeholder="please enter task"/>
+        <input
+          id={"enterNewTask"}
+          type={"text"}
+          placeholder="please enter task"
+        />
         <ol>
           <li>task</li>
         </ol>
       </main>
+      <Counter />
     </div>
   );
 }
 
-// export default connect()(App);
 export default App;
