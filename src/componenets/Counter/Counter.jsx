@@ -1,14 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "./counterSlice";
-import S from "./Counter.module.scss";
 
 export function Counter() {
   const count = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
 
   return (
-    <div className={S.container}>
+    <div>
       <div>
         <button
           aria-label="Increment value"

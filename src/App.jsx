@@ -1,11 +1,10 @@
-import "./App.css";
-import S from "./App.module.scss";
-import { Counter } from "./features/counter/Counter";
+import { Counter } from "./componenets/Counter/Counter";
+
 
 function App() {
   return (
-    <div className={S.App}>
-      <header className={S.header}>
+    <div>
+      <header>
         <h1>List</h1>
       </header>
       <main>
@@ -15,6 +14,7 @@ function App() {
           type={"text"}
           placeholder="please enter task"
         />
+        <button>add task</button>
         <ol>
           <li>task</li>
         </ol>
