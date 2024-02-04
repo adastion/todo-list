@@ -2,23 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const taskSlice = createSlice({
   name: "tasks",
-  initialState: [
-    {
-      id: crypto.randomUUID(),
-      description: '1',
-      completed: false,
-    },
-    {
-      id: crypto.randomUUID(),
-      description: '2',
-      completed: true,
-    },
-    {
-      id: crypto.randomUUID(),
-      description: '3',
-      completed: true,
-    },
-  ],
+  initialState: [],
   reducers: {
     addTask: (state, action) => {
       if (action.payload)
