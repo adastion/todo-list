@@ -5,9 +5,6 @@ import taskReducer from "../componenets/Tasks/taskSlice";
 export default configureStore({
   reducer: {
     counter: counterReducer,
-    task: taskReducer,
+    tasks: taskReducer,
   },
-  
 });
-
-console.log(counterReducer)
