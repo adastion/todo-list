@@ -12,17 +12,17 @@ export const taskSlice = createSlice({
           completed: false,
         });
     },
-    deleteTask: (state, taskId) => {
-      state.filter((task) => task.id !== taskId);
+    deleteTask: (state, action) => {
+      return state.filter((task) => task.id !== action.payload);
     },
-    completedTask: (state) => {
+    completedTask: (state, action) => {
       if (!state.completed) {
-        return true;
+        state.completed = action.payload;
       }
     },
   },
 });
 
-export const { addTask } = taskSlice.actions;
+export const { addTask, deleteTask, completedTask } = taskSlice.actions;
 
 export default taskSlice.reducer;

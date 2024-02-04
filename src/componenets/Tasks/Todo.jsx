@@ -1,5 +1,7 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
 import styled from "styled-components";
+import { deleteTask } from "./taskSlice";
 
 const TaskStyles = styled.ol`
   & li {
@@ -30,6 +32,7 @@ const TaskStyles = styled.ol`
 `;
 
 export const Todo = ({ tasks }) => {
+  const dispatch = useDispatch();
   return (
     <>
       <h2>To do list</h2>
@@ -38,7 +41,7 @@ export const Todo = ({ tasks }) => {
           <li key={task.id}>
             <input type="checkbox" />
             <span>{task.description}</span>
-            <span>❌</span>
+            <span onClick={()=> dispatch(deleteTask(task.id))}>❌</span>
           </li>
         ))}
       </TaskStyles>
