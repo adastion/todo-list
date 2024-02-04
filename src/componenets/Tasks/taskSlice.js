@@ -2,7 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const taskSlice = createSlice({
   name: "tasks",
-  initialState: [],
+  initialState: [
+    {
+      id: crypto.randomUUID(),
+      description: '1',
+      completed: false,
+    },
+    {
+      id: crypto.randomUUID(),
+      description: '2',
+      completed: true,
+    },
+    {
+      id: crypto.randomUUID(),
+      description: '3',
+      completed: true,
+    },
+  ],
   reducers: {
     addTask: (state, action) => {
       if (action.payload)
@@ -13,12 +29,11 @@ export const taskSlice = createSlice({
         });
     },
     deleteTask: (state, action) => {
-      return state.filter((task) => task.id !== action.payload);
+      return state.filter((task) => task.id !== action.payload.id);
     },
     completedTask: (state, action) => {
-      if (!state.completed) {
-        state.completed = action.payload;
-      }
+      const toggledTask = state.find((task) => task.id === action.payload.id);
+      toggledTask.completed = !toggledTask.completed;
     },
   },
 });
