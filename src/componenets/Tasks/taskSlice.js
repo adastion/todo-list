@@ -5,11 +5,20 @@ export const taskSlice = createSlice({
   initialState: [],
   reducers: {
     addTask: (state, action) => {
-      if(action.payload) 
-      state.push({
-        id: crypto.randomUUID(),
-        description: action.payload,
-      });
+      if (action.payload)
+        state.push({
+          id: crypto.randomUUID(),
+          description: action.payload,
+          completed: false,
+        });
+    },
+    deleteTask: (state, taskId) => {
+      state.filter((task) => task.id !== taskId);
+    },
+    completedTask: (state) => {
+      if (!state.completed) {
+        return true;
+      }
     },
   },
 });
