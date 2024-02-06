@@ -11,5 +11,10 @@ export const Button = styled.button`
   color: #000000e8;
   background: yellow;
   font-weight: 700;
-  font-size: 1.3rem;.
+  font-size: 1.3rem;
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;
