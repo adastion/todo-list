@@ -10,9 +10,20 @@ import { FlexWrap } from "./styles/FlexWrap";
 
 const AppStyles = styled.div`
   font-size: 1.5rem;
+  padding-top: 1rem;
+  display: grid;
+  width: 100%;
 
   & > * + * {
     margin-top: 3rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    text-align: center;
+
+    & header {
+      padding: 1rem;
+    }
   }
 `;
 

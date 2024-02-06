@@ -34,10 +34,11 @@ const TaskStyles = styled.ol`
       transition: all 0.3s ease-in-out;
       width: 34px;
       font-size: 2rem;
-      height: 0;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
+      pointer-events: none;
     }
 
     & span {
@@ -59,29 +60,27 @@ export const Todo = ({ tasks }) => {
   const dispatch = useDispatch();
 
   return (
-    <>
+    <TaskStyles>
       <h2>list</h2>
-      <TaskStyles>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <input
-              id="toggleCompleted"
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => dispatch(completedTask({ id: task.id }))}
-            />
-            <label htmlFor="toggleCompleted">
-              {task.completed ? "👌" : "👆"}
-            </label>
-            <span onClick={() => dispatch(completedTask({ id: task.id }))}>
-              {task.description}
-            </span>
-            <Button onClick={() => dispatch(deleteTask({ id: task.id }))}>
-              ❌
-            </Button>
-          </li>
-        ))}
-      </TaskStyles>
-    </>
+      {tasks.map((task) => (
+        <li key={task.id}>
+          <input
+            id="toggleCompleted"
+            type="checkbox"
+            checked={task.completed}
+            onChange={() => dispatch(completedTask({ id: task.id }))}
+          />
+          <label htmlFor="toggleCompleted">
+            {task.completed ? "👌" : "👆"}
+          </label>
+          <span onClick={() => dispatch(completedTask({ id: task.id }))}>
+            {task.description}
+          </span>
+          <Button onClick={() => dispatch(deleteTask({ id: task.id }))}>
+            ❌
+          </Button>
+        </li>
+      ))}
+    </TaskStyles>
   );
 };
