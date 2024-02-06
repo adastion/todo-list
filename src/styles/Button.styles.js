@@ -8,11 +8,13 @@ export const Button = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  color: #000000e8;
-  background: yellow;
+  color: lightblue;
+  background: blue;
   font-weight: 700;
   font-size: 1.3rem;
   transition: 0.3s ease-in-out;
+  width: ${(props) => props.width || "auto"};
+  text-wrap: nowrap;
 
   &:hover {
     opacity: 0.7;

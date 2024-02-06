@@ -9,7 +9,7 @@ const TaskStyles = styled.ol`
 
   & li {
     display: flex;
-    align-items: space;
+    align-items: center;
     justify-content: space-between;
     gap: 15px;
     padding: 0.5rem 1rem;
@@ -27,27 +27,27 @@ const TaskStyles = styled.ol`
           opacity: 0.3;
           flex-grow: 1;
         }
-
-        & ~ label {
-          background: green;
-        }
       }
     }
 
     & label {
       transition: all 0.3s ease-in-out;
-      width: 24px;
-      height: 100%;
-      background: red;
+      width: 34px;
+      font-size: 2rem;
+      height: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     & span {
       transition: all 0.3s ease-in-out;
       cursor: pointer;
       text-transform: capitalize;
-    }
+      max-width: 500px;
+      max-width: 500px;
+      overflow: hidden;
 
-    & span:last-child {
       &:hover {
         opacity: 0.7;
       }
@@ -60,7 +60,7 @@ export const Todo = ({ tasks }) => {
 
   return (
     <>
-      <h2>To do list</h2>
+      <h2>list</h2>
       <TaskStyles>
         {tasks.map((task) => (
           <li key={task.id}>
@@ -70,7 +70,9 @@ export const Todo = ({ tasks }) => {
               checked={task.completed}
               onChange={() => dispatch(completedTask({ id: task.id }))}
             />
-            <label htmlFor="toggleCompleted"></label>
+            <label htmlFor="toggleCompleted">
+              {task.completed ? "👌" : "👆"}
+            </label>
             <span onClick={() => dispatch(completedTask({ id: task.id }))}>
               {task.description}
             </span>

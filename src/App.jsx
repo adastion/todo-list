@@ -5,15 +5,20 @@ import { Todo } from "./componenets/Tasks/Todo.jsx";
 import { addTask } from "./componenets/Tasks/taskSlice";
 import { styled } from "styled-components";
 import { Button } from "./styles/Button.styles.js";
+import { Field } from "./styles/Field.js";
+import { FlexWrap } from "./styles/FlexWrap";
 
 const AppStyles = styled.div`
   font-size: 1.5rem;
 
-  & input {
-    font-size: 2rem;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+  & > * + * {
+    margin-top: 3rem;
   }
+`;
+
+const MainContent = styled.section`
+  display: grid;
+  gap: 1rem;
 `;
 
 function App() {
@@ -29,20 +34,22 @@ function App() {
   return (
     <AppStyles>
       <header>
-        <h1>List</h1>
+        <h1>To do List</h1>
       </header>
-      <main>
-        <label htmlFor="enterNewTask"></label>
-        <input
-          id="enterNewTask"
-          type="text"
-          placeholder="please enter task"
-          value={inputValue}
-          onChange={(event) => setInputValue(event.target.value)}
-        />
-        <Button onClick={handleAddTask}>add task</Button>
-      </main>
-      <Todo tasks={valueTask} />
+      <MainContent>
+        <FlexWrap align={"center"} justify={"space-between"}>
+          <label htmlFor="enterNewTask"></label>
+          <Field
+            id="enterNewTask"
+            type="text"
+            placeholder="please enter task"
+            value={inputValue}
+            onChange={(event) => setInputValue(event.target.value)}
+          />
+          <Button onClick={handleAddTask}>add task</Button>
+        </FlexWrap>
+        <Todo tasks={valueTask} />
+      </MainContent>
       <Counter />
     </AppStyles>
   );
