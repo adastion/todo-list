@@ -26,7 +26,7 @@ export const GlobalStyles = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     background: black;
     color: yellow;
-    width: 60%;
+    max-width: 1440px;
     margin: 0 auto;
   }
 

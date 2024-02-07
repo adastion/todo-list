@@ -20,10 +20,7 @@ const AppStyles = styled.div`
 
   @media screen and (max-width: 768px) {
     text-align: center;
-
-    & header {
-      padding: 1rem;
-    }
+    padding: 1rem;
   }
 `;
 
