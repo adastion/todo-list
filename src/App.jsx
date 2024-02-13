@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Counter } from "./componenets/Counter/Counter";
-import { Todo } from "./componenets/Tasks/Todo.jsx";
-import { addTask } from "./componenets/Tasks/taskSlice";
 import { styled } from "styled-components";
+import { Counter } from "./componenets/Counter/Counter";
+import { Spotify } from "./componenets/Spotify/Spotify.jsx";
+import { Todo } from "./componenets/Tasks/Todo.jsx";
+import { addTask, fetchDataList } from "./componenets/Tasks/taskSlice";
 import { Button } from "./styles/Button.styles.js";
 import { Field } from "./styles/Field.js";
 import { FlexWrap } from "./styles/FlexWrap";
@@ -31,7 +32,8 @@ const MainContent = styled.section`
 
 function App() {
   const [inputValue, setInputValue] = useState("");
-  const valueTask = useSelector((state) => state.tasks);
+  const valueTask = useSelector((state) => state.tasks.todolist);
+  const { status, error } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
 
   const handleAddTask = () => {
@@ -39,12 +41,18 @@ function App() {
     setInputValue("");
   };
 
+  useEffect(() => {
+    dispatch(fetchDataList());
+  }, [dispatch]);
+
   return (
     <AppStyles>
       <header>
         <h1>To do List</h1>
       </header>
-      <MainContent>
+
+      <Spotify />
+      {/* <MainContent>
         <FlexWrap align={"center"} justify={"space-between"}>
           <label htmlFor="enterNewTask"></label>
           <Field
@@ -56,9 +64,11 @@ function App() {
           />
           <Button onClick={handleAddTask}>add task</Button>
         </FlexWrap>
+        {status === "loading" && <h2>Loading....</h2>}
+        {error && <h2>ERROR {error} </h2>}
         <Todo tasks={valueTask} />
       </MainContent>
-      <Counter />
+      <Counter /> */}
     </AppStyles>
   );
 }
