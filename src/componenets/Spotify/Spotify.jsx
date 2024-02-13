@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Field } from "../../styles/Field";
 import { Button } from "./../../styles/Button.styles";
 import styled from "styled-components";
+import axios from "axios";
 
 const SpotifyStyles = styled.div`
   display: grid;
@@ -15,12 +16,13 @@ const SpotifyStyles = styled.div`
 
 export const Spotify = () => {
   const CLIENT_ID = "4ef8202170f94c73bc0f7b23babd79a2";
-  // const CLIENT_SECRET = "9dcf9a4c7e9b456ea9db916eb4229e2e";
   const REDIRECT_URI = "http://localhost:3000/todo-list";
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
 
   const [token, setToken] = useState("");
+  const [searchKey, setSearchKey] = useState("");
+  const [artistsList, setArtistsList] = useState("");
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -36,11 +38,47 @@ export const Spotify = () => {
       window.localStorage.setItem("token", token);
     }
     setToken(token);
-  }, []);
+  }, [artistsList]);
 
   const logOut = () => {
     setToken("");
     window.localStorage.removeItem("token");
+  };
+
+  const searchArtist = async (event) => {
+    event.preventDefault();
+    if (searchKey) {
+      const { data } = await axios.get(
+        "https://api.spotify.com/v1/search?_limit=5",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            q: searchKey,
+            type: "artist",
+          },
+        }
+      );
+      setArtistsList(data.artists.items);
+      console.log(data.artists.items);
+    } else {
+      <h2>The search field is empty </h2>;
+    }
+  };
+
+  const renderArtists = () => {
+    return artistsList.map((artist) => (
+      <li>
+        {artist.images.length ? (
+          <img width={"20%"} src={artist.images[2].url} alt="cover" />
+        ) : (
+          <div>not cover</div>
+        )}{" "}
+        <br />
+        {artist.name}
+      </li>
+    ));
   };
 
   return (
@@ -58,13 +96,19 @@ export const Spotify = () => {
         <Button onClick={logOut}>Log out</Button>
       )}
       {token ? (
-        <form action="">
-          <Field type="search" placeholder="search music" />
+        <form onSubmit={searchArtist}>
+          <Field
+            onChange={setSearchKey}
+            type="search"
+            placeholder="search music"
+          />
           <Button type="submit">Search</Button>
         </form>
       ) : (
         <h2>Please login</h2>
       )}
+
+      <ol>{artistsList ? renderArtists() : <div>artists:</div>}</ol>
     </SpotifyStyles>
   );
 };
