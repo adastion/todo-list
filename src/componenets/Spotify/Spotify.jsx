@@ -1,8 +1,8 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { Field } from "../../styles/Field";
 import { Button } from "./../../styles/Button.styles";
-import styled from "styled-components";
-import axios from "axios";
 
 const SpotifyStyles = styled.div`
   display: grid;
@@ -38,7 +38,7 @@ export const Spotify = () => {
       window.localStorage.setItem("token", token);
     }
     setToken(token);
-  }, [artistsList]);
+  }, []);
 
   const logOut = () => {
     setToken("");
@@ -49,7 +49,7 @@ export const Spotify = () => {
     event.preventDefault();
     if (searchKey) {
       const { data } = await axios.get(
-        "https://api.spotify.com/v1/search?_limit=5",
+        "https://api.spotify.com/v1/search?limit=5",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -71,10 +71,10 @@ export const Spotify = () => {
     return artistsList.map((artist) => (
       <li>
         {artist.images.length ? (
-          <img width={"20%"} src={artist.images[2].url} alt="cover" />
+          <img width={"20%"} src={artist.images[0].url} alt="cover" />
         ) : (
           <div>not cover</div>
-        )}{" "}
+        )}
         <br />
         {artist.name}
       </li>
@@ -84,7 +84,6 @@ export const Spotify = () => {
   return (
     <SpotifyStyles>
       <h3>Spotify</h3>
-
       {!token ? (
         <Button
           as={"a"}
