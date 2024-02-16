@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Counter } from "./componenets/Counter/Counter";
+import { styled } from "styled-components";
 import { Todo } from "./componenets/Tasks/Todo.jsx";
 import { addTask } from "./componenets/Tasks/taskSlice";
-import { styled } from "styled-components";
 import { Button } from "./styles/Button.styles.js";
 import { Field } from "./styles/Field.js";
 import { FlexWrap } from "./styles/FlexWrap";
@@ -31,7 +30,7 @@ const MainContent = styled.section`
 
 function App() {
   const [inputValue, setInputValue] = useState("");
-  const valueTask = useSelector((state) => state.tasks);
+  const valueTask = useSelector((state) => state.tasks.list);
   const dispatch = useDispatch();
 
   const handleAddTask = () => {
@@ -58,7 +57,6 @@ function App() {
         </FlexWrap>
         <Todo tasks={valueTask} />
       </MainContent>
-      <Counter />
     </AppStyles>
   );
 }

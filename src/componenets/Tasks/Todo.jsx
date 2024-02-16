@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Button } from "../../styles/Button.styles";
-import { completedTask, deleteTask } from "./taskSlice";
+import { addTask, completedTask, deleteTodoTask, fetchTodoList } from "./taskSlice";
 
 const TaskStyles = styled.ol`
   display: grid;
@@ -60,51 +60,37 @@ const TaskStyles = styled.ol`
 
 export const Todo = ({ tasks }) => {
   const dispatch = useDispatch();
-
-  const [testDataList, setTestDataList] = useState([]);
-  const [count, setCount] = useState(5);
+  const {status, error} = useSelector(state => state.tasks)
 
   useEffect(() => {
-    const getTodos = async () => {
-      try {
-        const response = await fetch(
-          `https://jsonplaceholder.typicode.com/todos?_limit=${count}`
-        );
-        const data = await response.json();
-        setTestDataList(data);
-      } catch (error) {
-        console.log("message error ", error);
-      }
-    };
-    getTodos();
-  }, [count]);
+    dispatch(fetchTodoList({id: tasks.id}));
+  }, [dispatch, tasks.id]);
 
   return (
-    <>
-      <Button onClick={() => setCount(count + 5)}>More</Button>
-      <TaskStyles>
-        <h2>list</h2>
-
-        {testDataList.map((task) => (
-          <li key={task.id}>
-            <input
-              id="toggleCompleted"
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => dispatch(completedTask({ id: task.id }))}
-            />
-            <label htmlFor="toggleCompleted">
-              {task.completed ? "👌" : "👆"}
-            </label>
-            <span onClick={() => dispatch(completedTask({ id: task.id }))}>
-              {task.title}
-            </span>
-            <Button onClick={() => dispatch(deleteTask({ id: task.id }))}>
-              ❌
-            </Button>
-          </li>
-        ))}
-      </TaskStyles>
-    </>
+    <TaskStyles>
+      <h2>list</h2>
+      {console.log(tasks)}
+      {status === "loading" && <h1>loading...</h1>}
+      {error && <h1>... {error}</h1>}
+      {tasks.map((task) => (
+        <li key={task.id}>
+          <input
+            id="toggleCompleted"
+            type="checkbox"
+            checked={task.completed}
+            onChange={() => dispatch(addTask({ id: task.id }))}
+          />
+          <label htmlFor="toggleCompleted">
+            {task.completed ? "👌" : "👆"}
+          </label>
+          <span onClick={() => dispatch(completedTask({ id: task.id }))}>
+            {task.title}
+          </span>
+          <Button onClick={() => dispatch(deleteTodoTask(task.id))}>
+            ❌
+          </Button>
+        </li>
+      ))}
+    </TaskStyles>
   );
 };
