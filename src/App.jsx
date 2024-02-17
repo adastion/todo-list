@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { styled } from "styled-components";
 import { Todo } from "./componenets/Tasks/Todo.jsx";
-import { addTask } from "./componenets/Tasks/taskSlice";
+import { addTodoTask } from "./componenets/Tasks/taskSlice";
 import { Button } from "./styles/Button.styles.js";
 import { Field } from "./styles/Field.js";
 import { FlexWrap } from "./styles/FlexWrap";
@@ -34,7 +34,7 @@ function App() {
   const dispatch = useDispatch();
 
   const handleAddTask = () => {
-    dispatch(addTask(inputValue));
+    dispatch(addTodoTask(inputValue));
     setInputValue("");
   };
 

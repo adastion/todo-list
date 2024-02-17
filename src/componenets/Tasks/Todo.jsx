@@ -2,7 +2,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Button } from "../../styles/Button.styles";
-import { addTask, completedTask, deleteTodoTask, fetchTodoList } from "./taskSlice";
+import {
+  addTodoTask,
+  deleteTodoTask,
+  fetchTodoList,
+  patchTodoTask
+} from "./taskSlice";
 
 const TaskStyles = styled.ol`
   display: grid;
@@ -60,10 +65,10 @@ const TaskStyles = styled.ol`
 
 export const Todo = ({ tasks }) => {
   const dispatch = useDispatch();
-  const {status, error} = useSelector(state => state.tasks)
+  const { status, error } = useSelector((state) => state.tasks);
 
   useEffect(() => {
-    dispatch(fetchTodoList({id: tasks.id}));
+    dispatch(fetchTodoList({ id: tasks.id }));
   }, [dispatch, tasks.id]);
 
   return (
@@ -78,17 +83,15 @@ export const Todo = ({ tasks }) => {
             id="toggleCompleted"
             type="checkbox"
             checked={task.completed}
-            onChange={() => dispatch(addTask({ id: task.id }))}
+            onChange={() => dispatch(addTodoTask(task.title))}
           />
           <label htmlFor="toggleCompleted">
             {task.completed ? "👌" : "👆"}
           </label>
-          <span onClick={() => dispatch(completedTask({ id: task.id }))}>
+          <span onClick={() => dispatch(patchTodoTask(task.id))}>
             {task.title}
           </span>
-          <Button onClick={() => dispatch(deleteTodoTask(task.id))}>
-            ❌
-          </Button>
+          <Button onClick={() => dispatch(deleteTodoTask(task.id))}>❌</Button>
         </li>
       ))}
     </TaskStyles>
